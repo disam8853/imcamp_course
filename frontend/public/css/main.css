@@ -452,7 +452,7 @@ input.input100 {
 	padding: 20px 20px;
 }
 .introduceLeftCol{
-	border-right: 4px solid tr(28,110,164,0.5);
+	border-right: 4px solid rgba(28,110,164,0.5);
 }
 .introduceRightCol{
 	padding: 20px 20px;
@@ -464,8 +464,7 @@ input.input100 {
 .font-size20{
 	font-size: 20px;
 }
-.panel-heading{
-}
+
 .panel-collapse{
 	margin-left: 20px;
 }
