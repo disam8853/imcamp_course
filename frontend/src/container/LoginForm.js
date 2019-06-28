@@ -50,9 +50,11 @@ class LoginForm extends React.Component {
           alert(response.data.error)
         } else {
           // login successfully
-          let token = response.data.token;
+          let token = response.data.token,
+            name = response.data.name;
           console.log(token)
-          this.setState({ token: token, login: true });
+          this.setState({ token: token, login: true});
+          localStorage.setItem('name', name);
           this.props.handleToken(token);
         }
       })

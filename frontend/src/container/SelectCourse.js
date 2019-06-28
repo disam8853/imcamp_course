@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 class SelectCourse extends React.Component{
     constructor(props){
@@ -13,7 +14,7 @@ class SelectCourse extends React.Component{
               <h1>選課系統</h1>
             </div>
             <div class="userInfoWrapper">
-              <h5 class="userInfo">歡迎回來，XXX</h5>
+              <h5 class="userInfo h4">歡迎回來，<Link to='/profile' token={this.props.token} className='h4 mr-5 mt-4 bg-highlight text-info'>{localStorage.getItem('name')}</Link></h5>
             </div>
             <div class="row main">
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import SelectionData from '../component/SelectionData'
 
 const axios = require('axios');
@@ -11,8 +11,8 @@ class Profile extends React.Component {
     super(props)
     this.state={
       token: localStorage.getItem('token'),
-      name: "王松億",
-      school: "台北市立松山高中",
+      name: "",
+      school: "",
       section: [],
       redirect: false
     };
@@ -53,15 +53,22 @@ class Profile extends React.Component {
         </div>
         <hr/>
         <div className='proBody'>
-          <h3 >{this.state.name}</h3>
-          <h4 className='my-3'>{this.state.school}</h4>
+          <h3 >姓名：{this.state.name}</h3>
+          <h4 className='my-3'>學校：{this.state.school}</h4>
           <h3>選課資料：</h3>
-          <ol>
-            {this.state.section.map(data => 
-              <li><SelectionData data={data} /></li>
+
+            {this.state.section.map((data, i) => 
+              <div className='my-3'>
+                <h4 className='mb-2'>第{i}時段：</h4>
+                <SelectionData data={data} />
+                <hr/>
+              </div>
             )}
-          </ol>
           
+        </div>
+
+        <div className='proFooter'>
+          <Link to='select' className='btn btn-primary'>選課去</Link>
         </div>
       </div>
     )}
