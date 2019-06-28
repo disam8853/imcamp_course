@@ -1,6 +1,6 @@
 import React from 'react'
 import Selector from '../component/Selector'
-import { Link, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 const axios = require('axios');
 //import '../css/main.css'
 
