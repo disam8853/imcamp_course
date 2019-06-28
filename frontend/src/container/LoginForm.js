@@ -11,7 +11,8 @@ class LoginForm extends React.Component{
         this.state = {
             account: "",
             password: "",
-            isStudent: true 
+            isStudent: true,
+            link:"/intro"
         }
         document.getElementsByClassName("wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50")[0].setAttribute("class","wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50")
         document.title="系統登入"
@@ -26,11 +27,11 @@ class LoginForm extends React.Component{
     }
 
     handleStuOnclick = (e)=>{
-        this.setState({isStudent: true})
+        this.setState({isStudent: true,link:"/intro"})
     }
 
     handleTeachOnclick = (e)=>{
-        this.setState({isStudent:false})
+        this.setState({isStudent:false,link:"/teacher"})
     }
 
     handleSubmit = (e)=>{
@@ -46,7 +47,7 @@ class LoginForm extends React.Component{
                 </span>
 
                 <div className="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-                    <input className="input100" type="text" name="email" placeholder="Account" onChange={this.handleAccount}/>
+                    <input className="input100" type="text" name="email" placeholder="Email" onChange={this.handleAccount}/>
                     <span className="focus-input100-1"></span>
                     <span className="focus-input100-2"></span>
                 </div>
@@ -59,7 +60,7 @@ class LoginForm extends React.Component{
                 <Selector isStudent={this.state.isStudent} stuOnclick={this.handleStuOnclick} teachOnclick={this.handleTeachOnclick}/>
                 <div className="container-login100-form-btn m-t-20">
                     <button className="login100-form-btn" onClick={this.handleSubmit}>
-                        <Link to="/intro" style={{display: 'block', fontSize:"14px", width:"100%", color:"white", height:"50px", paddingTop:"12px"}}>登入</Link>
+                        <Link to={this.state.link} style={{display: 'block', fontSize:"14px", width:"100%", color:"white", height:"50px", paddingTop:"12px"}}>登入</Link>
                     </button>
                 </div>
 
