@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 
 var teacherSchema = new mongoose.Schema({
   email: {
@@ -11,12 +10,14 @@ var teacherSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  school: String,
-  hash: String,
-  salt: String,
-  select: [{
-    section: Number,
+  password: {
+    type: String,
+    required: true
+  },
+  courses: [{
     course_id: Number,
-    priority: Number
+    section: Number
   }]
 });
+
+module.exports = Teacher = mongoose.model("teachers", teacherSchema);
