@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+  <!--===============================================================================================-->  
+    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+  <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+  <!--===============================================================================================-->  
+    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <title>選課系統</title>
+    <script>
+      onDragover = (ev)=>{
+        ev.preventDefault();
+      }
+      onDrag = (ev)=>{
+        ev.dataTransfer.setData("text",ev.target.id)
+        console.log(ev.target.id)
+        //console.log(ev.clientX)
+        let listID = ev.target.id.substr(0,ev.target.id.indexOf(" "))
+        
+      }
+      allowDrop = (ev)=>{
+        ev.preventDefault();
+      }
+    </script>
+  </head>
+  <body>
+      <div class="limiter">
+        <div class="container-login100">
+          <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50 selectScreen">
+            <div class="titleWrapper">
+              <h1>選課系統</h1>
+            </div>
+            <div class="userInfoWrapper">
+              <h5 class="userInfo">歡迎回來，XXX</h5>
+            </div>
+            <div class="row main">
+
+              <div style="width: 100%">
+
+                <button class="btn btn-primary btn-lg btn-block category" type="button" data-toggle="collapse" data-target="#collapse1" aria-expanded="false" aria-controls="collapseExample">
+                  Button with data-target
+                </button>
+                 <div class="collapse" id="collapse1">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-2 leftCol">
+                        <ul class="nav flex-column">
+                          <li class="nav-item" draggable="true" ondrop="onDragover(event)" ondragover="allowDrop(event)" id="a 1" ondrag="onDrag(event)">
+                            <p class="nav-link active">Active</p>
+                          </li>
+                          <li class="nav-item" draggable="true" ondrop="onDragover(event)" ondragover="allowDrop(event)" id="a 2" ondrag="onDrag(event)">
+                            <p class="nav-link" >Link</p>
+                          </li>
+                          <li class="nav-item" draggable="true" ondrop="onDragover(event)" ondragover="allowDrop(event)" id="a 3" ondrag="onDrag(event)">
+                            <p class="nav-link" >Link</p>
+                          </li>
+                      </div>
+                      <div class="col-10 rightCol">
+                        34
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button class="btn btn-primary btn-lg btn-block category" type="button" data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapseExample">
+                  Button with data-target
+                </button>
+                 <div class="collapse" id="collapse2">
+                  <div class="card-body">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                  </div>
+                </div>
+
+                <button class="btn btn-primary btn-lg btn-block category" type="button" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapseExample">
+                  Button with data-target
+                </button>
+                 <div class="collapse" id="collapse3">
+                  <div class="card-body">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  </body>
+</html>
