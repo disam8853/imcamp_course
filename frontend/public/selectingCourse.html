@@ -28,6 +28,21 @@
     <link rel="stylesheet" href="css/main.css">
 
     <title>選課系統</title>
+    <script>
+      onDragover = (ev)=>{
+        ev.preventDefault();
+      }
+      onDrag = (ev)=>{
+        ev.dataTransfer.setData("text",ev.target.id)
+        console.log(ev.target.id)
+        //console.log(ev.clientX)
+        let listID = ev.target.id.substr(0,ev.target.id.indexOf(" "))
+        
+      }
+      allowDrop = (ev)=>{
+        ev.preventDefault();
+      }
+    </script>
   </head>
   <body>
       <div class="limiter">
@@ -51,14 +66,14 @@
                     <div class="row">
                       <div class="col-2 leftCol">
                         <ul class="nav flex-column">
-                          <li class="nav-item">
-                            <a class="nav-link active" href="#">Active</a>
+                          <li class="nav-item" draggable="true" ondrop="onDragover(event)" ondragover="allowDrop(event)" id="a 1" ondrag="onDrag(event)">
+                            <p class="nav-link active">Active</p>
                           </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
+                          <li class="nav-item" draggable="true" ondrop="onDragover(event)" ondragover="allowDrop(event)" id="a 2" ondrag="onDrag(event)">
+                            <p class="nav-link" >Link</p>
                           </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
+                          <li class="nav-item" draggable="true" ondrop="onDragover(event)" ondragover="allowDrop(event)" id="a 3" ondrag="onDrag(event)">
+                            <p class="nav-link" >Link</p>
                           </li>
                       </div>
                       <div class="col-10 rightCol">

@@ -346,7 +346,7 @@ input.input100 {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 0px;
   width: 100%;
   height: 60px;
   background-color: #4272d7;
@@ -459,10 +459,11 @@ input.input100 {
 }
 .panel{
 	padding: 10px;
-	margin: 30px 0px;
+	margin: 10px 0px;
 }
 .font-size20{
-	font-size: 20px;
+  font-size: 20px;
+  color: #333333;
 }
 
 .panel-collapse{
@@ -474,14 +475,14 @@ input.input100 {
 	padding-bottom: 20px;
 }
 .courseDescription{
-	font-family: OpenSans-Regular;
+  font-family: OpenSans-Regular;
+  padding-top: 30px;
 	font-size: 20px;
 	padding-left: 10px;
-	padding-bottom: 70px;
+	padding-bottom: 50px;
 }
 #goToSelect{
 	padding: 5px;
-	padding-top: 15px;
 	background-color: orange;
 	border-radius: 5px;
 }
@@ -517,4 +518,19 @@ input.input100 {
   border-radius: 5px;
   margin: 10px 0px;
   margin-right: 0px;
+}
+.nav-link:hover{
+  cursor: pointer;
+}
+.li-link{
+  padding: 10px 0;
+  color: #666666;
+  
+}
+.li-link:hover{
+  color: #333333;
+  cursor: pointer;
+}
+.nav-item{
+  padding: 10px 0;
 }

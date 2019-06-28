@@ -59,7 +59,7 @@ class LoginForm extends React.Component{
                 <Selector isStudent={this.state.isStudent} stuOnclick={this.handleStuOnclick} teachOnclick={this.handleTeachOnclick}/>
                 <div className="container-login100-form-btn m-t-20">
                     <button className="login100-form-btn" onClick={this.handleSubmit}>
-                        <Link to="/intro" style={{display: 'block', fontSize:"14px", width:"100%", color:"white"}}>登入</Link>
+                        <Link to="/intro" style={{display: 'block', fontSize:"14px", width:"100%", color:"white", height:"50px", paddingTop:"12px"}}>登入</Link>
                     </button>
                 </div>
 
