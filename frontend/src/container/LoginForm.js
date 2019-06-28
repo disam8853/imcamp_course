@@ -1,46 +1,71 @@
 import React from 'react'
 import Selector from '../component/Selector'
-import {Link} from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 const axios = require('axios');
 //import '../css/main.css'
 
-class LoginForm extends React.Component{
+class LoginForm extends React.Component {
 
-    constructor(props){
-        super(props)
-        this.state = {
-            account: "",
-            password: "",
-            isStudent: true 
+  constructor(props) {
+    super(props)
+    this.state = {
+      account: "",
+      password: "",
+      isStudent: true,
+      token: this.props.token,
+      login: false
+    }
+    document.getElementsByClassName("wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50")[0].setAttribute("class", "wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50")
+    document.title = "系統登入"
+  }
+
+  handleAccount = (e) => {
+    this.setState({ account: e.target.value })
+  }
+
+  handlePassword = (e) => {
+    this.setState({ password: e.target.value })
+  }
+
+  handleStuOnclick = (e) => {
+    this.setState({ isStudent: true })
+  }
+
+  handleTeachOnclick = (e) => {
+    this.setState({ isStudent: false })
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(1)
+    axios.post('/api/login', {
+        email: this.state.account,
+        password: this.state.password
+      })
+      .then(response => {
+        console.log(response);
+        if (response.data.error) {
+          // login fail
+          console.log(response.data.error)
+          alert(response.data.error)
+        } else {
+          // login successfully
+          let token = response.data.token;
+          console.log(token)
+          this.setState({ token: token, login: true });
         }
-        document.getElementsByClassName("wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50")[0].setAttribute("class","wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50")
-        document.title="系統登入"
-    }
-    
-    handleAccount = (e)=>{
-        this.setState({account: e.target.value})
-    }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
 
-    handlePassword = (e)=>{
-        this.setState({password: e.target.value})
+  render() {
+    if (this.state.login) {
+        return (<Redirect push to="/intro" />)
     }
-
-    handleStuOnclick = (e)=>{
-        this.setState({isStudent: true})
-    }
-
-    handleTeachOnclick = (e)=>{
-        this.setState({isStudent:false})
-    }
-
-    handleSubmit = (e)=>{
-        e.preventDefault();
-        console.log(1)
-    }
-
-    render(){
-        return(
-            <form className="login100-form validate-form">
+    return (
+      <form className="login100-form validate-form">
                 <span className="login100-form-title p-b-33">
                     系統登入
                 </span>
@@ -58,14 +83,14 @@ class LoginForm extends React.Component{
                 </div>
                 <Selector isStudent={this.state.isStudent} stuOnclick={this.handleStuOnclick} teachOnclick={this.handleTeachOnclick}/>
                 <div className="container-login100-form-btn m-t-20">
-                    <button className="login100-form-btn" onClick={this.handleSubmit}>
-                        <Link to="/intro" style={{display: 'block', fontSize:"14px", width:"100%", color:"white", height:"50px", paddingTop:"12px"}}>登入</Link>
+                    <button className="login100-form-btn" onClick={this.handleSubmit} style={{display: 'block', fontSize:"14px", width:"100%", color:"white", height:"50px", paddingTop:"12px"}}>
+                        登入
                     </button>
                 </div>
 
             </form>
-        )
-    }
+    )
+  }
 }
 
 export default LoginForm
