@@ -1,11 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var Student = require('../models/students');
+var Teacher = require('../models/teachers');
 var jwt = require('jsonwebtoken')
 var bcrypt = require('bcrypt');
 var passport = require("passport");
-
-process.env.SECRET_KEY = "web is difficult";
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -16,17 +15,15 @@ router.post('/register', function(req, res, next) {
   var userData = {
     email: req.body.email,
     name: req.body.name,
-    school: req.body.school,
     password: req.body.password,
-    section: req.body.section
   }
 
-  Student.findOne({ email: req.body.email })
+  Teacher.findOne({ email: req.body.email })
     .then(user => {
       if (!user) {
         bcrypt.hash(req.body.password, 10, (err, hash) => {
           userData.password = hash
-          Student.create(userData)
+          Teacher.create(userData)
             .then(user => {
               res.json({ status: user.email + ' regidtered!' })
             })
@@ -44,14 +41,13 @@ router.post('/register', function(req, res, next) {
 });
 
 router.post('/login', function(req, res, next) {
-  Student.findOne({ email: req.body.email })
+  Teacher.findOne({ email: req.body.email })
     .then(user => {
       if (user) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
           const payload = {
             _id: user._id,
             name: user.name,
-            school: user.school,
             email: user.email
           }
 
@@ -71,6 +67,7 @@ router.post('/login', function(req, res, next) {
         } else {
           res.json({ error: 'password is incorrect.' })
         }
+
       } else {
         res.json({ error: 'User is not found.' })
       }
@@ -80,29 +77,24 @@ router.post('/login', function(req, res, next) {
     })
 })
 
-router.get('/students', function(req, res, next) {
-  Student.find({}, (err, students) => {
-    res.json(students)
+router.get('/teachers', function(req, res, next) {
+  Teacher.find({}, (err, teachers) => {
+    res.json(teachers)
   })
 })
 
-router.get('/profile', passport.authenticate('token', { session: false }), function(req, res, next) {
+
+router.get('/profile', passport.authenticate('teacher_token', { session: false }), function(req, res, next) {
   res.send(req.user)
 })
 
-router.put('/selection', passport.authenticate('token', { session: false }), function(req, res, next) {
-  const section_id = req.body.section_id
+router.put('/course', passport.authenticate('teacher_token', { session: false }), function(req, res, next) {
+  const section = req.body.section
   const course_id = req.body.course_id
-  const priority = req.body.priority
-  let newsection = req.user.section
+  let newcourses = req.user.courses
+  newcourses.push({ course_id: course_id, section: section })
 
-  while (newsection[section_id] == undefined) {
-  	newsection.push([])
-  }
-
-  newsection[section_id].push({ course_id: course_id, priority: priority })
-
-  Student.findByIdAndUpdate(req.user.id, { section: newsection }, { new: true },
+  Teacher.findByIdAndUpdate(req.user.id, { courses: newcourses }, { new: true },
     (err, user) => {
       if (err) {
         res.status(500).send(err);
@@ -111,16 +103,15 @@ router.put('/selection', passport.authenticate('token', { session: false }), fun
     })
 })
 
-router.delete('/selection', passport.authenticate('token', { session: false }), function(req, res, next) {
-  const section_id = req.body.section_id
+router.delete('/course', passport.authenticate('teacher_token', { session: false }), function(req, res, next) {
+  const section = req.body.section
   const course_id = req.body.course_id
-  const priority = req.body.priority
-  let newsection = req.user.section
+  let newcourses = req.user.courses
 
   try {
-    for (var i = newsection[section_id].length - 1; i >= 0; i--) {
-      if (newsection[section_id][i].course_id == course_id) {
-        newsection[section_id].splice(i, 1)
+    for (var i = newcourses.length - 1; i >= 0; i--) {
+      if (newcourses[i].course_id == course_id) {
+        newcourses.splice(i, 1)
         break
       }
     }
@@ -129,7 +120,7 @@ router.delete('/selection', passport.authenticate('token', { session: false }), 
     return res.status(500).send("something just wrong.")
   }
 
-  Student.findByIdAndUpdate(req.user.id, { section: newsection }, { new: true },
+  Teacher.findByIdAndUpdate(req.user.id, { courses: newcourses }, { new: true },
     (err, user) => {
       if (err) {
         res.status(500).send(err);
@@ -139,13 +130,13 @@ router.delete('/selection', passport.authenticate('token', { session: false }), 
 })
 
 router.delete('/deleteALL', function(req, res, next) {
-	Student.deleteMany({}, (err) => {
-		if (err) {
-			res.send(err)
-		}else {
-			res.send("Successfully remove all students.")
-		}
-	})
+  Teacher.deleteMany({}, (err) => {
+    if (err) {
+      res.send(err)
+    }else {
+      res.send("Successfully remove all teachers.")
+    }
+  })
 })
 
 module.exports = router;

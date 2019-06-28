@@ -8,6 +8,10 @@ var passport = require("passport");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var teachersRouter = require('./routes/teachers');
+
+// 要匯入小隊員資料才要用
+// require('./dataProcessor.js')
 
 var app = express();
 
@@ -47,6 +51,7 @@ app.use(passport.session());
 require('./config/passport')
 
 app.use('/api', usersRouter);
+app.use('/api/teacher', teachersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

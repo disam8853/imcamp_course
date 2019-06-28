@@ -1,11 +1,14 @@
 var mongoose = require('mongoose');
-// var Schema = mongoose.Schema;
 
 var studentSchema = new mongoose.Schema({
   email: {
     type: String,
     unique: true,
     required: true
+  },
+  unlucky: {
+    type: Boolean,
+    default: false
   },
   name: {
     type: String,
@@ -22,7 +25,6 @@ var studentSchema = new mongoose.Schema({
       priority: Number
     }]
   ]
-
 });
 
 module.exports = Student = mongoose.model("students", studentSchema);
