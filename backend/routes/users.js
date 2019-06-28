@@ -86,7 +86,7 @@ router.get('/students', function(req, res, next) {
   })
 })
 
-router.get('/profile', passport.authenticate('token', { session: false }), function(req, res, next) {
+router.post('/profile', passport.authenticate('token', { session: false }), function(req, res, next) {
   res.send(req.user)
 })
 

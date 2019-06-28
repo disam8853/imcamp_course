@@ -40,6 +40,7 @@ class ClassIntro extends React.Component{
             <React.Fragment>
             <div className="titleWrapper">
               <h1>課程介紹</h1>
+              <Link to='/profile' token={this.props.token}>{localStorage.getItem('token')}</Link>
             </div>
             <div className="row main">
               <div className="col-2 introduceLeftCol">
