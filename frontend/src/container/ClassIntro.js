@@ -130,6 +130,9 @@ class ClassIntro extends React.Component{
             <div className="titleWrapper">
               <h1>課程介紹</h1>
             </div>
+            <div className="userInfoWrapper">
+                <h5 className="userInfo">歡迎回來，XXX</h5>
+              </div>
             <div className="row main">
               <div className="col-2 introduceLeftCol">
                 <div className="panel-group" id="accordion">
