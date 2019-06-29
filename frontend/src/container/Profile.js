@@ -47,17 +47,6 @@ class Profile extends React.Component {
   }
 
   render() {
-    let fakeSelect=[
-      ["機器學習",
-      "統計",
-      "python"],
-      ["機器學習",
-      "統計",
-      "python"],
-      ["機器學習",
-      "統計",
-      "python"]
-    ]
     let fakeResult=[
       "機器學習",
       "統計",
@@ -86,9 +75,10 @@ class Profile extends React.Component {
           <div className='proBody'>
             <div className="row">
               <div className="col-6">
-                <h3>選課資料：</h3>
+                <h2>選課資料：</h2>
 
-                  {fakeSelect.map((data, i) => {
+                  {
+                    this.state.section.map((data, i) => {
                     return(
                     <div className='my-3' key={i} style={{marginLeft:"30px"}}>
                       <h4 className='mb-2'>第{i+1}時段：</h4>
@@ -98,10 +88,10 @@ class Profile extends React.Component {
               </div>
               <div className="col-6">
                 <h1>分發結果</h1>
-                {fakeResult.map((data, i) => {
+                {fakeResult.map((data, i) => {////////////也是course_name格式 所以fake資料室錯的
                     return(
                       <div className='my-3' key={i} style={{marginLeft:"30px"}}>
-                        <h4 className='mb-2'>第{i+1}時段：{data}</h4>
+                        <h4 className='mb-2'>第{i+1}時段：{data.course_name}</h4> 
                       </div>)
                   })}
               </div>
