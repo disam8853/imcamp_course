@@ -81,6 +81,7 @@ class SelectCourse extends React.Component{
 
     handleSubmit = (e)=>{
       console.log(1)
+      this.setState({loading:true})
 
       // 第二天要改這裡！！！！
       const list = this.state.list1;
@@ -135,7 +136,7 @@ class SelectCourse extends React.Component{
           this.setState({redirect: true});
         });
 
-        this.setState({loading:true})
+        
 
       // this.state.list1.map((name, priority) => {
 
@@ -261,6 +262,7 @@ class SelectCourse extends React.Component{
         return(
           <div>
               <h1 style={{"textAlign":"center","height":"30vh", "margin-top":"20vh"}}>已收到您的提交</h1>
+              <Link to='/' className="btn btn-primary btn-lg mx-auto d-block">回首頁</Link>
           </div>
         )
       }
