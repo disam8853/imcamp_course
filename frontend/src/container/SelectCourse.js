@@ -15,7 +15,8 @@ class SelectCourse extends React.Component{
           ],
           list3:[
             "音樂作品欣賞","機器學習演講","管理學"
-          ]
+          ],
+          finish:false
         }
     }
     dragStart = (e)=>{
@@ -75,88 +76,97 @@ class SelectCourse extends React.Component{
     }
 
     handleSubmit = (e)=>{
-      console.log(1)
+      this.setState({finish:true})
     }
 
     render(){
-      let list1 = this.state.list1.map((clas,index)=>{
-        return(<li className="nav-item" key={index}><a className="nav-link" id={"a"+index} draggable={true} onDragStart={this.dragStart} onDrop={this.dropped} onDragEnter={this.cancelDefault} onDragOver={this.dragover} onDragLeave={this.dragleave} >{clas}</a></li>)
-      })
-      let list2 = this.state.list2.map((clas,index)=>{
-        return(<li className="nav-item" key={index}><a className="nav-link" id={"b"+index} draggable={true} onDragStart={this.dragStart} onDrop={this.dropped} onDragEnter={this.cancelDefault} onDragOver={this.dragover} onDragLeave={this.dragleave} >{clas}</a></li>)
-      })
-      let list3 = this.state.list3.map((clas,index)=>{
-        return(<li className="nav-item" key={index}><a className="nav-link" id={"c"+index} draggable={true} onDragStart={this.dragStart} onDrop={this.dropped} onDragEnter={this.cancelDefault} onDragOver={this.dragover} onDragLeave={this.dragleave} >{clas}</a></li>)
-      })
-        return(
-            <React.Fragment>
-            <div className="titleWrapper">
-              <h1>選課系統</h1>
-            </div>
-            <div className="userInfoWrapper">
-              <h5 className="userInfo">歡迎回來，XXX</h5>
-            </div>
-            <div className="row main">
+      if(!this.state.finish){
+        let list1 = this.state.list1.map((clas,index)=>{
+          return(<li className="nav-item" key={index}><a className="nav-link" id={"a"+index} draggable={true} onDragStart={this.dragStart} onDrop={this.dropped} onDragEnter={this.cancelDefault} onDragOver={this.dragover} onDragLeave={this.dragleave} >{clas}</a></li>)
+        })
+        let list2 = this.state.list2.map((clas,index)=>{
+          return(<li className="nav-item" key={index}><a className="nav-link" id={"b"+index} draggable={true} onDragStart={this.dragStart} onDrop={this.dropped} onDragEnter={this.cancelDefault} onDragOver={this.dragover} onDragLeave={this.dragleave} >{clas}</a></li>)
+        })
+        let list3 = this.state.list3.map((clas,index)=>{
+          return(<li className="nav-item" key={index}><a className="nav-link" id={"c"+index} draggable={true} onDragStart={this.dragStart} onDrop={this.dropped} onDragEnter={this.cancelDefault} onDragOver={this.dragover} onDragLeave={this.dragleave} >{clas}</a></li>)
+        })
+          return(
+              <React.Fragment>
+              <div className="titleWrapper">
+                <h1>選課系統</h1>
+              </div>
+              <div className="userInfoWrapper">
+                <h5 className="userInfo">歡迎回來，XXX</h5>
+              </div>
+              <div className="row main">
 
-              <div style={{width:"100%"}}>
+                <div style={{width:"100%"}}>
 
-                <button className="btn btn-primary btn-lg btn-block category" type="button" data-toggle="collapse" data-target="#collapse1" aria-expanded="false" aria-controls="collapseExample">
-                  7/2（二）15：00~17：00 大選修
-                </button>
-                 <div className="collapse" id="collapse1">
-                  <div className="card-body">
+                  <button className="btn btn-primary btn-lg btn-block category" type="button" data-toggle="collapse" data-target="#collapse1" aria-expanded="false" aria-controls="collapseExample">
+                    7/2（二）15：00~17：00 大選修
+                  </button>
+                  <div className="collapse" id="collapse1">
+                    <div className="card-body">
+                      <div className="row">
+                        <div className="col-12 leftCol">
+                          <ul className="nav flex-column">
+                            {list1}
+                            </ul>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                  <button className="btn btn-primary btn-lg btn-block category" type="button" data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapseExample">
+                  7/4（四）09：00~10：30 小選修
+                  </button>
+                  <div className="collapse" id="collapse2">
+                    <div className="card-body">
+                      <div className="row">
+                        <div className="col-12 leftCol">
+                          <ul className="nav flex-column">
+                            {list2}
+                            </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <button className="btn btn-primary btn-lg btn-block category" type="button" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapseExample">
+                  7/4（四）10：30~12：00 小選修
+                  </button>
+                  <div className="collapse" id="collapse3">
+                    <div className="card-body">
                     <div className="row">
-                      <div className="col-12 leftCol">
-                        <ul className="nav flex-column">
-                          {list1}
-                          </ul>
-                      </div>
-                      
-                    </div>
-                  </div>
-                </div>
-                <button className="btn btn-primary btn-lg btn-block category" type="button" data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapseExample">
-                7/4（四）09：00~10：30 小選修
-                </button>
-                 <div className="collapse" id="collapse2">
-                  <div className="card-body">
-                    <div className="row">
-                      <div className="col-12 leftCol">
-                        <ul className="nav flex-column">
-                          {list2}
-                          </ul>
+                        <div className="col-12 leftCol">
+                          <ul className="nav flex-column">
+                            {list3}
+                            </ul>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <button className="btn btn-primary btn-lg btn-block category" type="button" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapseExample">
-                7/4（四）10：30~12：00 小選修
-                </button>
-                 <div className="collapse" id="collapse3">
-                  <div className="card-body">
-                  <div className="row">
-                      <div className="col-12 leftCol">
-                        <ul className="nav flex-column">
-                          {list3}
-                          </ul>
-                      </div>
-                    </div>
-                  </div>
                 </div>
-
+                
+              </div>
+              <div className="row" onClick={this.handleSubmit}>
+                <div className="col-11"/>
+                <div className="col-1" id="goToSelect">
+                  <Link><h5 className="text" style={{color:"black", padding:"10px 0"}}>提交</h5></Link>
+                </div>
               </div>
               
-            </div>
-            <div className="row" onClick={this.handleSubmit}>
-              <div className="col-11"/>
-              <div className="col-1" id="goToSelect">
-                <Link to="/finish"><h5 className="text" style={{color:"black", padding:"10px 0"}}>提交</h5></Link>
-              </div>
-            </div>
-            
-            </React.Fragment>
+              </React.Fragment>
+          )
+      }
+      else{
+        return(
+          <div>
+              <h1 style={{"textAlign":"center","height":"30vh", "margin-top":"20vh"}}>已收到您的提交</h1>
+          </div>
         )
+      }
     }
 }
 export default SelectCourse
