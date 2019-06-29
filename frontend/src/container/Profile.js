@@ -9,6 +9,8 @@ class Profile extends React.Component {
 
   constructor(props) {
     super(props)
+    document.getElementsByClassName("wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50")[0].setAttribute("class","wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50 introScreen")
+    document.title="個人檔案"
     this.state={
       token: localStorage.getItem('token'),
       name: "",
@@ -17,6 +19,8 @@ class Profile extends React.Component {
       redirect: false
     };
   }
+
+  
 
   componentWillMount() {
     if (!this.state.token) {
@@ -43,36 +47,79 @@ class Profile extends React.Component {
   }
 
   render() {
+    let fakeSelect=[
+      ["機器學習",
+      "統計",
+      "python"],
+      ["機器學習",
+      "統計",
+      "python"],
+      ["機器學習",
+      "統計",
+      "python"]
+    ]
+    let fakeResult=[
+      "機器學習",
+      "統計",
+      "python"
+    ]
     if (this.state.redirect) {
       return (<Redirect push to="/"/>)
     } else {
     return (
       <div className='profile'>
         <div className='proHeader'>
-          <h1>個人主頁</h1>
-        </div>
-        <hr/>
-        <div className='proBody'>
-          <h3 >姓名：{this.state.name}</h3>
-          <h4 className='my-3'>學校：{this.state.school}</h4>
-          <h3>選課資料：</h3>
-
-            {this.state.section.map((data, i) => 
-              <div className='my-3'>
-                <h4 className='mb-2'>第{i+1}時段：</h4>
-                <SelectionData data={data} />
-                <hr />
+          <div className="row">
+            <div className="col">
+            <h1 style={{fontSize:"50px"}}>個人主頁</h1>
+            </div>
+            <div className="col">
+              <div style={{marginLeft:"75%"}}>
+                <h4 style={{marginBottom:"15px"}}>姓名：{this.state.name}</h4>
+                <h4 >學校：{this.state.school}</h4>
               </div>
-            )}
-          
+            </div>
+          </div>
         </div>
+        
+        <hr/> 
+          <div className='proBody'>
+            <div className="row">
+              <div className="col-6">
+                <h3>選課資料：</h3>
 
-        <div className='proFooter'>
-          <Link to='select' className='btn btn-primary'>選課去</Link>
+                  {fakeSelect.map((data, i) => {
+                    return(
+                    <div className='my-3' key={i} style={{marginLeft:"30px"}}>
+                      <h4 className='mb-2'>第{i+1}時段：</h4>
+                        <SelectionData data={data} />
+                    </div>)
+                  })}
+              </div>
+              <div className="col-6">
+                <h1>分發結果</h1>
+                {fakeResult.map((data, i) => {
+                    return(
+                      <div className='my-3' key={i} style={{marginLeft:"30px"}}>
+                        <h4 className='mb-2'>第{i+1}時段：{data}</h4>
+                      </div>)
+                  })}
+              </div>
+            </div>
         </div>
+        <hr />
+
+        <div className="row bottomButton">
+              <div className="col-11">
+              </div>
+              <div className="col-1">
+                <Link to='select' className='btn btn-primary'style={{padding:"15px 20px"}}>選課去</Link>
+              </div>
+            </div>
       </div>
     )}
   }
 }
+//
 
 export default Profile
