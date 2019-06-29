@@ -14,7 +14,6 @@ router.get('/', function(req, res, next) {
 router.post('/register', function(req, res, next) {
   var userData = {
     email: req.body.email,
-    name: req.body.name,
     password: req.body.password,
     course_name: req.body.course_name
   }
@@ -48,7 +47,6 @@ router.post('/login', function(req, res, next) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
           const payload = {
             _id: user._id,
-            name: user.name,
             email: user.email
           }
 
