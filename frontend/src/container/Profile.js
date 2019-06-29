@@ -59,9 +59,9 @@ class Profile extends React.Component {
 
             {this.state.section.map((data, i) => 
               <div className='my-3'>
-                <h4 className='mb-2'>第{i}時段：</h4>
+                <h4 className='mb-2'>第{i+1}時段：</h4>
                 <SelectionData data={data} />
-                <hr/>
+                <hr />
               </div>
             )}
           

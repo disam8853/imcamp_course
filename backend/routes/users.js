@@ -6,6 +6,23 @@ var bcrypt = require('bcrypt');
 var passport = require("passport");
 
 process.env.SECRET_KEY = "web is difficult";
+const couseID = [
+  {
+    "作業研究": 0,
+    "統計": 1,
+    "演算法": 2
+  },
+  {
+    "進階 python": 0,
+    "音樂作品欣賞": 1,
+    "計算機概論": 2
+  },
+  {
+    "音樂作品欣賞": 0,
+    "機器學習演講": 1,
+    "管理學": 2
+  }
+]
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -58,7 +75,7 @@ router.post('/login', function(req, res, next) {
           jwt.sign(
             payload,
             process.env.SECRET_KEY, {
-              expiresIn: 1800 // 1 year in seconds
+              expiresIn: 18000 // 1 year in seconds
             },
             (err, token) => {
               res.json({
@@ -91,10 +108,12 @@ router.post('/profile', passport.authenticate('token', { session: false }), func
   res.send(req.user)
 })
 
-router.put('/selection', passport.authenticate('token', { session: false }), function(req, res, next) {
-  const section_id = req.body.section_id
-  const course_id = req.body.course_id
+router.post('/selection1', passport.authenticate('token', { session: false }), function(req, res, next) {
+  const section_id = 0
   const course_name = req.body.course_name
+  // courseID[0] day1, [1] day2, [2] day3
+  const course_id = couseID[0][course_name]
+  
   const priority = req.body.priority
   let newsection = req.user.section
 
@@ -102,7 +121,7 @@ router.put('/selection', passport.authenticate('token', { session: false }), fun
   	newsection.push([])
   }
 
-  newsection[section_id].push({ course_id: course_id, name: name, priority: priority })
+  newsection[section_id].push({ course_id: course_id, course_name: course_name, priority: priority })
 
   Student.findByIdAndUpdate(req.user.id, { section: newsection }, { new: true },
     (err, user) => {

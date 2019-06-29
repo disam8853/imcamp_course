@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+const axios = require('axios');
+
 class SelectCourse extends React.Component{
     constructor(props){
         super(props)
@@ -76,6 +78,81 @@ class SelectCourse extends React.Component{
 
     handleSubmit = (e)=>{
       console.log(1)
+
+      // 第二天要改這裡！！！！
+      const list = this.state.list1;
+
+      // 媽的如果讓所有request同步都話就會有synchronize的問題，只能這樣寫了QQ
+      axios.post('/api/selection1', {
+          token: localStorage.getItem('token'),
+          course_name: list[0],
+          priority: 0
+        })
+        .then(response => {
+          console.log(response.data.section);
+
+
+          axios.post('/api/selection1', {
+          token: localStorage.getItem('token'),
+          course_name: list[1],
+          priority: 1
+        })
+        .then(response => {
+          console.log(response.data.section);
+
+
+          axios.post('/api/selection1', {
+          token: localStorage.getItem('token'),
+          course_name: list[2],
+          priority: 2
+        })
+        .then(response => {
+          console.log(response.data.section);
+
+        })
+        .catch(error => {
+          console.log(error);
+          alert('請重新登入！')
+          this.setState({redirect: true});
+        });
+
+
+        })
+        .catch(error => {
+          console.log(error);
+          alert('請重新登入！')
+          this.setState({redirect: true});
+        });
+
+
+        })
+        .catch(error => {
+          console.log(error);
+          alert('請重新登入！')
+          this.setState({redirect: true});
+        });
+
+      // this.state.list1.map((name, priority) => {
+
+      //   // console.log(name + " " + priority + '\n')
+
+      //   axios.post('/api/selection1', {
+      //     token: localStorage.getItem('token'),
+      //     course_name: name,
+      //     priority: priority
+      //   })
+      //   .then(response => {
+      //     console.log(response.data.section);
+
+      //   })
+      //   .catch(error => {
+      //     console.log(error);
+      //     alert('請重新登入！')
+      //     this.setState({redirect: true});
+      //   });
+
+      // })
+
     }
 
     render(){
