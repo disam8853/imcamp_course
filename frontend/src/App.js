@@ -24,7 +24,7 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         <Switch>
-          <Route exact path='/' component={LoginForm} handleToken={this.handleToken}/>
+          <Route exact path='/' component={()=><LoginForm handleToken={this.handleToken}/>} />
           <Route path='/intro' component={()=><ClassIntro token={this.state.token}/>}/>
           <Route path='/select' component={()=><SelectCourse token={this.state.token}/>}/>
           <Route path='/teacher' component={()=><TeacherPanel token={this.state.token}/>}/>

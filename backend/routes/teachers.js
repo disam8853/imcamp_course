@@ -16,6 +16,7 @@ router.post('/register', function(req, res, next) {
     email: req.body.email,
     name: req.body.name,
     password: req.body.password,
+    course_name: req.body.course_name
   }
 
   Teacher.findOne({ email: req.body.email })
@@ -59,7 +60,8 @@ router.post('/login', function(req, res, next) {
             (err, token) => {
               res.json({
                 success: true,
-                token: token
+                token: token,
+                name: user.name
               });
             }
           );
@@ -69,7 +71,7 @@ router.post('/login', function(req, res, next) {
         }
 
       } else {
-        res.json({ error: 'User is not found.' })
+        res.json({ error: 'Teacher is not found.' })
       }
     })
     .catch(err => {
@@ -84,17 +86,19 @@ router.get('/teachers', function(req, res, next) {
 })
 
 
-router.get('/profile', passport.authenticate('teacher_token', { session: false }), function(req, res, next) {
+router.post('/profile', passport.authenticate('teacher_token', { session: false }), function(req, res, next) {
   res.send(req.user)
 })
 
-router.put('/course', passport.authenticate('teacher_token', { session: false }), function(req, res, next) {
-  const section = req.body.section
-  const course_id = req.body.course_id
-  let newcourses = req.user.courses
-  newcourses.push({ course_id: course_id, section: section })
+router.put('/addStudent', passport.authenticate('teacher_token', { session: false }), function(req, res, next) {
+  const student_id = req.body.student_id
+  const name = req.body.student_name
+  const school = req.body.student_school
+  const email = req.body.studen_email
+  let newStudents = req.user.students
+  newStudents.push({ student_id: student_id, name: name, school: school, email: email })
 
-  Teacher.findByIdAndUpdate(req.user.id, { courses: newcourses }, { new: true },
+  Teacher.findByIdAndUpdate(req.user.id, { students: newStudents }, { new: true },
     (err, user) => {
       if (err) {
         res.status(500).send(err);
@@ -103,15 +107,15 @@ router.put('/course', passport.authenticate('teacher_token', { session: false })
     })
 })
 
-router.delete('/course', passport.authenticate('teacher_token', { session: false }), function(req, res, next) {
+router.delete('/deleteStudent', passport.authenticate('teacher_token', { session: false }), function(req, res, next) {
   const section = req.body.section
-  const course_id = req.body.course_id
-  let newcourses = req.user.courses
+  const student_id = req.body.student_id
+  let newStudents = req.user.students
 
   try {
-    for (var i = newcourses.length - 1; i >= 0; i--) {
-      if (newcourses[i].course_id == course_id) {
-        newcourses.splice(i, 1)
+    for (var i = newStudents.length - 1; i >= 0; i--) {
+      if (newStudents[i].student_id == student_id) {
+        newStudents.splice(i, 1)
         break
       }
     }
@@ -120,7 +124,7 @@ router.delete('/course', passport.authenticate('teacher_token', { session: false
     return res.status(500).send("something just wrong.")
   }
 
-  Teacher.findByIdAndUpdate(req.user.id, { courses: newcourses }, { new: true },
+  Teacher.findByIdAndUpdate(req.user.id, { students: newStudents }, { new: true },
     (err, user) => {
       if (err) {
         res.status(500).send(err);

@@ -1,5 +1,6 @@
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var Student = require('./models/students');
+var Teacher = require('./models/teachers');
 var bcrypt = require('bcrypt');
 
 var request = new XMLHttpRequest();

@@ -73,7 +73,7 @@ router.post('/login', function(req, res, next) {
           res.json({ error: 'password is incorrect.' })
         }
       } else {
-        res.json({ error: 'User is not found.' })
+        res.json({ error: 'Student is not found.' })
       }
     })
     .catch(err => {
@@ -94,6 +94,7 @@ router.post('/profile', passport.authenticate('token', { session: false }), func
 router.put('/selection', passport.authenticate('token', { session: false }), function(req, res, next) {
   const section_id = req.body.section_id
   const course_id = req.body.course_id
+  const course_name = req.body.course_name
   const priority = req.body.priority
   let newsection = req.user.section
 
@@ -101,7 +102,7 @@ router.put('/selection', passport.authenticate('token', { session: false }), fun
   	newsection.push([])
   }
 
-  newsection[section_id].push({ course_id: course_id, priority: priority })
+  newsection[section_id].push({ course_id: course_id, name: name, priority: priority })
 
   Student.findByIdAndUpdate(req.user.id, { section: newsection }, { new: true },
     (err, user) => {

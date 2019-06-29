@@ -1,5 +1,7 @@
 import React from 'react'
 
+const axios = require('axios');
+
 class TeacherPanel extends React.Component{
 
     constructor(props){
@@ -7,9 +9,36 @@ class TeacherPanel extends React.Component{
         document.getElementsByClassName("wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50")[0].setAttribute("class","wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50 selectScreen")
         document.title="學生資訊"
         this.state={
-            students:"",
-            courseID:"",
-            teacherAccount:""
+            name: localStorage.getItem('name'),
+            token: localStorage.getItem('token'),
+            course_name: "",
+            students: []
+        }
+    }
+
+    componentWillMount() {
+        this.setState({
+            name: localStorage.getItem('name'),
+            token: localStorage.getItem('token')
+        });
+
+        if (this.state.token) {
+              axios.post('/api/teacher/profile', {
+                token: this.state.token
+              })
+              .then(response => {
+                console.log(response.data.section);
+                this.setState({
+                  name: response.data.name,
+                  course_name: response.data.course_name,
+                  students: response.data.students
+                });
+              })
+              .catch(error => {
+                console.log(error);
+                alert('請重新登入！')
+                this.setState({redirect: true});
+              });
         }
     }
 
@@ -18,23 +47,6 @@ class TeacherPanel extends React.Component{
         console.log(e.target.id)
     }
     render(){
-        let fakeStu=[
-            {
-              name:"Kevin",
-              school:"Hsinchu Senior High",
-              email:"kevin@gmail.com "
-            },
-            {
-              name:"Yunchia",
-              school:"Taipei First Girl High School",
-              email:"yunchia@gmail.com"
-            },
-            {
-              name:"Cupid",
-              school:"Bad School :(",
-              email:"cupid@gmail.com"
-            }
-          ]
         let fakeClass=[{
             name:"機器學習",
             id:"5"
@@ -45,7 +57,7 @@ class TeacherPanel extends React.Component{
             name:"統計",
             id:"2"
         }]
-        let students = fakeStu.map((student,index)=>{
+        let students = this.state.students.map((student,index)=>{
             return(
                 <div key={index}>
                     <button class="btn btn-secondary btn-lg btn-block student" type="button" data-toggle="collapse" data-target={"#stu"+index} aria-expanded="false" aria-controls="collapseExample">
@@ -86,6 +98,7 @@ class TeacherPanel extends React.Component{
                 </div>
                 <div className="row button-group">
                     {courseList}
+
                 </div>
                 <div class="row main">
 

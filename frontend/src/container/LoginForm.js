@@ -44,8 +44,8 @@ class LoginForm extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    //console.log(1)
-    axios.post('/api/login', {
+    let api = (this.state.isStudent ? '/api/login' : '/api/teacher/login')
+    axios.post(api , {
         email: this.state.account,
         password: this.state.password
       })
@@ -68,13 +68,14 @@ class LoginForm extends React.Component {
         }
       })
       .catch(error => {
+        alert(error)
         console.log(error);
       });
   }
 
   render() {
     if (this.state.login) {
-        return (<Redirect push to="/intro" token={this.state.token}/>)
+        return (<Redirect push to={this.state.link} token={this.state.token}/>)
     }
     return (
       <form className="login100-form validate-form">
@@ -97,7 +98,7 @@ class LoginForm extends React.Component {
                 <Selector isStudent={this.state.isStudent} stuOnclick={this.handleStuOnclick} teachOnclick={this.handleTeachOnclick}/>
                 <div className="container-login100-form-btn m-t-20">
                     <button className="login100-form-btn" onClick={this.handleSubmit}>
-                        <Link  style={{display: 'block', fontSize:"14px", width:"100%", color:"white", height:"50px", paddingTop:"12px"}}>登入</Link>
+                        <div style={{display: 'block', fontSize:"14px", width:"100%", color:"white", height:"50px", paddingTop:"12px"}}>登入</div>
 
                     </button>
                 </div>
