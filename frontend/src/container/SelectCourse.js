@@ -1,6 +1,7 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
-import { async } from 'q';
+
+import { Link } from 'react-router-dom'
+
 
 class SelectCourse extends React.Component{
     constructor(props){
@@ -104,6 +105,7 @@ class SelectCourse extends React.Component{
                   <h5 className="userInfo">歡迎回來，XXX</h5>
                 </div>
                 <div className="row main">
+
 
                   <div style={{width:"100%"}}>
 

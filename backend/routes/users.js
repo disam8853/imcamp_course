@@ -63,7 +63,8 @@ router.post('/login', function(req, res, next) {
             (err, token) => {
               res.json({
                 success: true,
-                token: token
+                token: token,
+                name: user.name
               });
             }
           );
@@ -86,7 +87,7 @@ router.get('/students', function(req, res, next) {
   })
 })
 
-router.get('/profile', passport.authenticate('token', { session: false }), function(req, res, next) {
+router.post('/profile', passport.authenticate('token', { session: false }), function(req, res, next) {
   res.send(req.user)
 })
 

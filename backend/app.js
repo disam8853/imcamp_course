@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser = require("body-parser");
 var passport = require("passport");
+var cors = require('cors')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -14,6 +15,7 @@ var teachersRouter = require('./routes/teachers');
 // require('./dataProcessor.js')
 
 var app = express();
+app.use(cors())
 
 var mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://admin:admin@cluster0-q3dwo.gcp.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true});

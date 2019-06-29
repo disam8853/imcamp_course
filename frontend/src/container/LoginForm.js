@@ -57,10 +57,14 @@ class LoginForm extends React.Component {
           alert(response.data.error)
         } else {
           // login successfully
-          let token = response.data.token;
+          let token = response.data.token,
+            name = response.data.name;
           console.log(token)
-          this.setState({ token: token, login: true });
-          this.props.handleToken(token)
+
+          this.setState({ token: token, login: true});
+          localStorage.setItem('name', name);
+          this.props.handleToken(token);
+
         }
       })
       .catch(error => {
@@ -70,7 +74,7 @@ class LoginForm extends React.Component {
 
   render() {
     if (this.state.login) {
-        return (<Redirect push to={this.state.link} />)
+        return (<Redirect push to="/intro" token={this.state.token}/>)
     }
     return (
       <form className="login100-form validate-form">
@@ -79,13 +83,14 @@ class LoginForm extends React.Component {
                 </span>
 
                 <div className="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+
                     <input className="input100" type="text" name="email" placeholder="Email" onChange={this.handleAccount}/>
                     <span className="focus-input100-1"></span>
                     <span className="focus-input100-2"></span>
                 </div>
 
                 <div className="wrap-input100 rs1 validate-input" data-validate="Password is required">
-                    <input className="input100" type="password" name="pass" placeholder="Password" onChange={this.handlePassword}/>
+                    <input className="input100" type="password" name="pass" placeholder="Password" onChange={this.handlePassword} />
                     <span className="focus-input100-1"></span>
                     <span className="focus-input100-2"></span>
                 </div>
