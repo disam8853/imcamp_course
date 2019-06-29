@@ -121,7 +121,18 @@ router.post('/selection1', passport.authenticate('token', { session: false }), f
   	newsection.push([])
   }
 
-  newsection[section_id].push({ course_id: course_id, course_name: course_name, priority: priority })
+  let exist = false
+  for (var i = newsection[section_id].length - 1; i >= 0; i--) {
+  	if (newsection[section_id][i].course_name == course_name) {
+  		exist = true
+  		newsection[section_id][i].priority = priority
+  		break
+  	}
+  }
+
+  if (!exist) {
+  	newsection[section_id].push({ course_id: course_id, course_name: course_name, priority: priority })
+  }
 
   Student.findByIdAndUpdate(req.user.id, { section: newsection }, { new: true },
     (err, user) => {
@@ -150,7 +161,7 @@ router.delete('/selection', passport.authenticate('token', { session: false }), 
     return res.status(500).send("something just wrong.")
   }
 
-  Student.findByIdAndUpdate(req.user.id, { section: newsection }, { new: true },
+  Student.findByIdAndUpdate(req.user.id, { section: newsection }, { new: true }, {useFindAndModify: false},
     (err, user) => {
       if (err) {
         res.status(500).send(err);

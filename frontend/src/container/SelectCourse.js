@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 const axios = require('axios');
 
@@ -20,7 +20,8 @@ class SelectCourse extends React.Component{
             "音樂作品欣賞","機器學習演講","管理學"
           ],
           finish:false,
-          loading:false
+          loading:false,
+          redirect: false
         }
     }
     dragStart = (e)=>{
@@ -112,7 +113,7 @@ class SelectCourse extends React.Component{
         })
         .then(response => {
           console.log(response.data.section);
-
+          this.setState({finish: true});
         })
         .catch(error => {
           console.log(error);
@@ -162,6 +163,9 @@ class SelectCourse extends React.Component{
     }
 
     render(){
+      if (this.state.redirect) {
+        return (<Redirect push to='/' token={this.state.token}/>)
+      }
       if(!this.state.finish){
         if(!this.state.loading){
           let list1 = this.state.list1.map((clas,index)=>{
@@ -262,7 +266,7 @@ class SelectCourse extends React.Component{
         return(
           <div>
               <h1 style={{"textAlign":"center","height":"30vh", "margin-top":"20vh"}}>已收到您的提交</h1>
-              <Link to='/' className="btn btn-primary btn-lg mx-auto d-block">回首頁</Link>
+              <Link to='/profile' className="btn btn-primary btn-lg mx-auto d-block">回個人頁面</Link>
           </div>
         )
       }
