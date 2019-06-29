@@ -44,7 +44,6 @@ class LoginForm extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(1)
     let api = (this.state.isStudent ? '/api/login' : '/api/teacher/login')
     axios.post(api , {
         email: this.state.account,
@@ -61,9 +60,11 @@ class LoginForm extends React.Component {
           let token = response.data.token,
             name = response.data.name;
           console.log(token)
+
           this.setState({ token: token, login: true});
           localStorage.setItem('name', name);
           this.props.handleToken(token);
+
         }
       })
       .catch(error => {

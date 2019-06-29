@@ -42,14 +42,28 @@ class TeacherPanel extends React.Component{
         }
     }
 
+    handleCourse = (e)=>{
+        this.setState({courseID:e.target.id})
+        console.log(e.target.id)
+    }
     render(){
+        let fakeClass=[{
+            name:"機器學習",
+            id:"5"
+        },{
+            name:"音樂作品欣賞",
+            id:"1"
+        },{
+            name:"統計",
+            id:"2"
+        }]
         let students = this.state.students.map((student,index)=>{
             return(
                 <div key={index}>
-                    <button class="btn btn-secondary btn-lg btn-block student" type="button" data-toggle="collapse" data-target={"#"+index} aria-expanded="false" aria-controls="collapseExample">
+                    <button class="btn btn-secondary btn-lg btn-block student" type="button" data-toggle="collapse" data-target={"#stu"+index} aria-expanded="false" aria-controls="collapseExample">
                         {student.name}
                     </button>
-                    <div class="collapse" id={index}>
+                    <div class="collapse" id={"stu"+index}>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12">
@@ -69,14 +83,22 @@ class TeacherPanel extends React.Component{
                 </div>
             )
         })
+        let courseList = fakeClass.map((clas, index)=>{
+            return(
+                <button className="button4" id={clas.id} key={index} onClick={this.handleCourse}>{clas.name}</button>
+            )
+        })
         return(
             <React.Fragment>
                 <div class="titleWrapper">
                     <h1>學生資訊</h1>
                 </div>
                 <div class="userInfoWrapper">
-                    <h5 class="userInfo">歡迎回來，{this.state.name}</h5>
-                    <h5 class="userInfo">您教授的課程是，{this.state.course_name}</h5>
+                    <h5 class="userInfo">歡迎回來，XXX</h5>
+                </div>
+                <div className="row button-group">
+                    {courseList}
+
                 </div>
                 <div class="row main">
 
