@@ -3,6 +3,7 @@ import LoginForm from './container/LoginForm'
 import ClassIntro from './container/ClassIntro'
 import SelectCourse from './container/SelectCourse'
 import Profile from './container/Profile'
+import AdminPage from './container/AdminPage'
 import TeacherPanel from './container/TeacherPanel'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import './App.css';
@@ -29,6 +30,7 @@ class App extends React.Component {
           <Route path='/select' component={()=><SelectCourse token={this.state.token}/>}/>
           <Route path='/teacher' component={()=><TeacherPanel token={this.state.token}/>}/>
           <Route path="/profile" component={()=><Profile token={this.state.token}/>}/>
+          <Route path="/admin" component={()=><AdminPage token={this.state.token}/>}/>
         </Switch>
       </BrowserRouter>
     );

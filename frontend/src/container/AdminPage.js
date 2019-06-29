@@ -3,7 +3,7 @@ import {Redirect} from 'react-router-dom'
 
 const axios = require('axios');
 
-class TeacherPanel extends React.Component{
+class AdminPage extends React.Component{
 
     constructor(props){
         super(props)
@@ -116,4 +116,4 @@ class TeacherPanel extends React.Component{
     }
 }
 
-export default TeacherPanel
+export default AdminPage
