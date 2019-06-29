@@ -22,6 +22,7 @@ var studentSchema = new mongoose.Schema({
   section: [
     [{
       course_id: Number,
+      course_name: String,
       priority: Number
     }]
   ]

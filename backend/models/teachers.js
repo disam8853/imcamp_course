@@ -14,9 +14,15 @@ var teacherSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  courses: [{
-    course_id: Number,
-    section: Number
+  course_name: {
+    type: String,
+    required: true
+  },
+  students: [{
+    student_id: String,
+    name: String,
+    school: String,
+    email: String
   }]
 });
 

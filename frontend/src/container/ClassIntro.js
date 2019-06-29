@@ -129,7 +129,8 @@ class ClassIntro extends React.Component{
             <React.Fragment>
             <div className="titleWrapper d-flex justify-content-between">
               <h1>課程介紹</h1>
-              <Link to='/profile' token={this.props.token} className='h4 mr-5 mt-4 bg-highlight text-info'>{localStorage.getItem('name')}</Link>
+              <h5 class="userInfo">歡迎回來，<Link to='/profile' token={this.props.token} className='h4 mr-5 mt-4 bg-highlight text-info'>{localStorage.getItem('name')}</Link></h5>
+              
             </div>
             <div className="row main">
               <div className="col-2 introduceLeftCol">
