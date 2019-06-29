@@ -28,6 +28,7 @@ class App extends React.Component {
           <Route path='/intro' component={()=><ClassIntro token={this.state.token}/>}/>
           <Route path='/select' component={()=><SelectCourse token={this.state.token}/>}/>
           <Route path='/teacher' component={()=><TeacherPanel token={this.state.token}/>}/>
+          <Route path="/profile" component={()=><Profile token={this.state.token}/>}/>
         </Switch>
       </BrowserRouter>
     );
