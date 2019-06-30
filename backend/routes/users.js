@@ -6,7 +6,7 @@ var bcrypt = require('bcrypt');
 var passport = require("passport");
 
 process.env.SECRET_KEY = "web is difficult";
-const couseID = [
+const courseID = [
   {
     "作業研究": 0,
     "統計": 1,
@@ -109,10 +109,10 @@ router.post('/profile', passport.authenticate('token', { session: false }), func
 })
 
 router.post('/selection1', passport.authenticate('token', { session: false }), function(req, res, next) {
-  const section_id = 0
+  const section_id = (req.body.section_id || 0)
   const course_name = req.body.course_name
   // courseID[0] day1, [1] day2, [2] day3
-  const course_id = couseID[0][course_name]
+  const course_id = courseID[0][course_name]
   
   const priority = req.body.priority
   let newsection = req.user.section
@@ -143,6 +143,44 @@ router.post('/selection1', passport.authenticate('token', { session: false }), f
     })
 })
 
+router.post('/selection', passport.authenticate('token', { session: false }), function(req, res, next) {
+	const list = req.body.list
+	const section_id = (req.body.section_id || 0)
+	let newsection = req.user.section
+
+	while (newsection[section_id] == undefined) {
+		newsection.push([])
+	}
+
+	try {
+		for (var i = 0; i < list.length; i++) {
+			let name = list[i]
+			let course_id = courseID[section_id][name]
+
+			while (newsection[section_id][i] == undefined) {
+				newsection[section_id].push([])
+			}
+
+			newsection[section_id][i].course_id = course_id
+			newsection[section_id][i].course_name = name
+			newsection[section_id][i].priority = i
+		}
+	} catch(err) {
+		console.log(err)
+		return res.status(500).send(err)
+	}
+
+	Student.findByIdAndUpdate(req.user.id, { section: newsection }, { new: true },
+    (err, user) => {
+      if (err) {
+        console.log(err)
+        res.status(500).send(err);
+      }
+      return res.json(user);
+    })
+
+})
+
 router.delete('/selection', passport.authenticate('token', { session: false }), function(req, res, next) {
   const section_id = req.body.section_id
   const course_id = req.body.course_id
@@ -161,7 +199,7 @@ router.delete('/selection', passport.authenticate('token', { session: false }), 
     return res.status(500).send("something just wrong.")
   }
 
-  Student.findByIdAndUpdate(req.user.id, { section: newsection }, { new: true }, {useFindAndModify: false},
+  Student.findByIdAndUpdate(req.user.id, { section: newsection }, { new: true },
     (err, user) => {
       if (err) {
         res.status(500).send(err);

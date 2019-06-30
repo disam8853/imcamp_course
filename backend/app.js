@@ -11,21 +11,33 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var teachersRouter = require('./routes/teachers');
 
-// 要匯入小隊員資料才要用
-// require('./dataProcessor.js')
-
 var app = express();
 app.use(cors())
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://admin:admin@cluster0-q3dwo.gcp.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true});
+const option = {
+  socketTimeoutMS: 20000,
+  keepAlive: true,
+  reconnectTries: 20000,
+  useNewUrlParser: true
+};
 
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  // we're connected!
-  console.log('!!!')
+const mongoURI = 'mongodb+srv://admin:admin@cluster0-hw6no.gcp.mongodb.net/test?retryWrites=true&w=majority';
+mongoose.connect(mongoURI, option).then(function() {
+  //connected successfully
+  console.log("connect db successfully!")
+  // 要匯入小隊員資料才要用
+  // require('./dataProcessor.js')
+  // require('./testData.js')
+
+}).catch(function(err) {
+  //err handle
+  console.log(err + "\nfuckkkkkkk u")
 });
+
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
