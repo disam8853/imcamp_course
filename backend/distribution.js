@@ -1,24 +1,25 @@
-export function distribution(times, data)
+function distribution(times, data)
 {
+	//console.log("in distribution");//
 	var result_and_data = {result:[], data: []};
 	var result = [
 	{
 		course_id: 0,
 		classroom: "none", 
 		students: [],
-		count = 0
+		count: 0
 	}, 
 	{
 		course_id: 1,
 		classroom: "none",
 		students: [],
-		count = 0
+		count: 0
 	}, 
 	{
 		course_id: 2,
 		classroom: "none",
 		students: [], 
-		count = 0
+		count: 0
 	}
 	]
 
@@ -34,7 +35,7 @@ export function distribution(times, data)
 					{
 
 						student_state[i] = true;
-						result[room_course_pair].students.push(data[i].user_id);
+						result[room_course_pair].students.push(data[i]._id);
 						result[room_course_pair].count++;
 					}
 				}
@@ -52,7 +53,7 @@ export function distribution(times, data)
 					if(Math.floor(Math.random() * 100) < rate)
 					{
 						student_state[i] = true;
-						result[room_course_pair].students.push(data[i].user_id);
+						result[room_course_pair].students.push(data[i]._id);
 						result[room_course_pair].count++;
 						acc--;
 					}
@@ -63,7 +64,7 @@ export function distribution(times, data)
 							if(data[i].section[times][j].priority == 1)
 							{
 								student_state[i] = true;
-								result[data[i].section[times][j].course_id].students.push(data[i].user_id);
+								result[data[i].section[times][j].course_id].students.push(data[i]._id);
 								result[data[i].section[times][j].course_id].count++;
 							}
 						}
@@ -86,7 +87,7 @@ export function distribution(times, data)
 							if(lucky == 0)
 							{
 								student_state[i] = true;
-								result[room_course_pair].students.push(data[i].user_id);
+								result[room_course_pair].students.push(data[i]._id);
 								result[room_course_pair].count++;
 								total++;
 							}
@@ -98,19 +99,26 @@ export function distribution(times, data)
 		}
 	}
 
-	var test_popularity = function(priority, course_popular, student_state)
+	var test_popularity = function(priority, course_popular,student_state)
 	{
+		course_popular[0] = 0;
+		course_popular[1] = 0;
+		course_popular[2] = 0;
+		//console.log("n: ", n);
 		for(i = 0; i < n; i++)
 		{
 			for(j = 0; j < 3; j++)
 			{
 				if(data[i].section[times][j].priority == priority && student_state[i] == false)
 				{
+					console.log("update");
 					course_popular[data[i].section[times][j].course_id] += 1;
 					break;
 				}
 			}
 		}
+		console.log("course_popular:", course_popular);
+
 	}
 
 	var deal_with_rest = function(student_state)
@@ -125,30 +133,36 @@ export function distribution(times, data)
 					if(data[i].section[times][j].priority == 2)
 					{
 						student_state[i] = true;
-						result[data[i].section[times][j].course_id].students.push(data[i].user_id);
+						result[data[i].section[times][j].course_id].students.push(data[i]._id);
 						result[data[i].section[times][j].course_id].count++;
 					}
 				}
 			}
 		}
-		//for(i = 0; i < )
 	}
 
 	var distribution_first = function()
 	{
+		//console.log("in dis_first");//
 		all_or_lucky(big_classroom, big_classroom_MAX - result[big_classroom].count, 0);
+		console.log(result);
 		all_or_lucky(small_classroom0, small_classroom_MAX - result[small_classroom0].count, 0);
 		all_or_lucky(small_classroom1, small_classroom_MAX - result[small_classroom1].count, 0);
+		//console.log("first state done");//
+		test_popularity(1, course_popular, student_state);
+		console.log(student_state);
+		console.log("\n");
+		console.log(course_popular);
 
-		test_popularity(1, course_popular, student_state);	
 		all_or_lucky(big_classroom, big_classroom_MAX - result[big_classroom].count, 1);
 		all_or_lucky(small_classroom0, small_classroom_MAX - result[small_classroom0].count, 1);
 		all_or_lucky(small_classroom1, small_classroom_MAX - result[small_classroom1].count, 1);
-
+		//console.log("second state done");//
 		deal_with_rest(student_state);	
 	}
 	var distribution_second = function()
 	{
+		//console.log('in dis second');//
 		all_or_lucky(big_classroom, big_classroom_MAX - result[big_classroom].count, 0);
 		all_or_lucky(small_classroom0, small_classroom_MAX - result[small_classroom0].count, 0);
 		all_or_lucky(small_classroom1, small_classroom_MAX - result[small_classroom1].count, 0);
@@ -169,19 +183,19 @@ export function distribution(times, data)
 			course_id: 0,
 			classroom: "none", 
 			students: [],
-			count = 0
+			count: 0
 		}, 
 		{
 			course_id: 1,
 			classroom: "none",
 			students: [],
-			count = 0
+			count: 0
 		}, 
 		{
 			course_id: 2,
 			classroom: "none",
 			students: [], 
-			count = 0
+			count: 0
 		}
 		]
 
@@ -200,7 +214,8 @@ export function distribution(times, data)
 		course_popular = [0, 0, 0];
 		best_course = -1;
 		test_popularity(0, course_popular, student_state);
-
+		console.log("test");
+		console.log(course_popular);
 		temp = Math.max(course_popular[0], course_popular[1], course_popular[2]);
 		for(i = 0; i < 3; i++)
 		{
@@ -235,7 +250,7 @@ export function distribution(times, data)
 			let flag = false;
 			for(j = 0; j < m; j++)
 			{
-				if(result_and_data.result[0][1].students[j] === data[i].user_id)
+				if(result_and_data.result[0][1].students[j] === data[i]._id)
 				{
 					flag = true;
 					music_done[i] = true;
@@ -254,7 +269,7 @@ export function distribution(times, data)
 						if(data[i].section[times][j].priority == k && data[i].section[times][j].course_id != 0)
 						{
 							student_state[i] = true;
-							result[data[i].section[times][j].course_id].students.push(data[i].user_id);
+							result[data[i].section[times][j].course_id].students.push(data[i]._id);
 							result[data[i].section[times][j].course_id].count++;
 							break;
 						}
@@ -290,6 +305,7 @@ export function distribution(times, data)
 	var small_classroom1 = -1;
 	var music_done = [];
 	var n = data.length;
+
 	var student_state = [];
 	for(i = 0; i < n; i++)
 	{
@@ -299,7 +315,8 @@ export function distribution(times, data)
 	var course_popular = [0, 0, 0];
 	var best_course = -1;
 	test_popularity(0, course_popular, student_state);
-
+	console.log("hello");
+	console.log(course_popular);
 	temp = Math.max(course_popular[0], course_popular[1], course_popular[2]);
 	for(i = 0; i < 3; i++)
 	{
@@ -329,6 +346,7 @@ export function distribution(times, data)
 
 	if(times == 0)
 	{
+		//console.log("in times == 0");//
 		distribution_first();
 		result_and_data.data = data;
 		result_and_data.result[0] = result;
@@ -339,8 +357,10 @@ export function distribution(times, data)
 	}
 
 
-
+	//console.log("almost done");//
 	return result_and_data;
 
 
 }
+
+module.exports.distribution = distribution

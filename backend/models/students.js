@@ -25,7 +25,13 @@ var studentSchema = new mongoose.Schema({
       course_name: String,
       priority: Number
     }]
-  ]
+  ],
+  result: [{
+    section_id: Number,
+    course_name: String,
+    classrome: String
+
+  }]
 });
 
 module.exports = Student = mongoose.model("students", studentSchema);

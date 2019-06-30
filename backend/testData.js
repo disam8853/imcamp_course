@@ -59,12 +59,15 @@ for (var i = 2; i < csvData.length; i++) {
   newsection[0][0].course_name = '作業研究'
   newsection[0][0].course_id = 0
   newsection[0][0].priority = ranNums[0]
+  // newsection[0][0].priority = 0
   newsection[0][1].course_name = '統計'
   newsection[0][1].course_id = 1
   newsection[0][1].priority = ranNums[1]
+  // newsection[0][1].priority = 1
   newsection[0][2].course_name = '演算法'
   newsection[0][2].course_id = 2
   newsection[0][2].priority = ranNums[2]
+  // newsection[0][2].priority = 2
 
   Student.findOne({ email: email })
     .then(user => {

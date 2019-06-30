@@ -1,20 +1,14 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
 var resultSchema = new mongoose.Schema({
-  section: Number,
-  
+  section_id: Number,
+
   data: [{
     course_id: Number,
     classroom: String,
-    students: [{
-      student_id: String,
-      name: String,
-      school: String,
-      email: String
-    }]
+    students: [{type: Schema.Types.ObjectId, ref: 'students'}]
   }]
-
- ]
 });
 
-module.exports = Result = mongoose.model("teachers", resultSchema);
+module.exports = Result = mongoose.model("results", resultSchema);

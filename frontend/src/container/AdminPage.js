@@ -11,26 +11,27 @@ class AdminPage extends React.Component{
         document.getElementsByClassName("wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50")[0].setAttribute("class","wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50 selectScreen")
         document.title="學生資訊"
         this.state={
-            token: localStorage.getItem('token'),
+            // token: localStorage.getItem('token'),
             course_name: "",
             students: [],
-            redirect: false
+            redirect: false,
+            dist: false
         }
     }
 
     componentWillMount() {
-        this.setState({
-            token: localStorage.getItem('token')
-        });
+        // this.setState({
+        //     token: localStorage.getItem('token')
+        // });
 
-        if (!localStorage.getItem('token')) {
-            this.setState({redirect: true});
-        }
+        // if (!localStorage.getItem('token')) {
+        //     this.setState({redirect: true});
+        // }
 
-        if (this.state.token) {
+        // if (this.state.token) {
               axios.get('/api/students')
               .then(response => {
-                console.log(response.data.section);
+                console.log(response.data);
                 this.setState({
                   students: response.data
                 });
@@ -38,15 +39,33 @@ class AdminPage extends React.Component{
               .catch(error => {
                 console.log(error);
                 alert('something wrong！')
-                this.setState({redirect: true});
               });
-        }
+        // }
     }
 
     handleCourse = (e)=>{
         this.setState({courseID:e.target.id})
         console.log(e.target.id)
     }
+
+    handleDist = () => {
+        let seciont_id = 0
+
+        axios.get('/api/distribution?seciont_id='+seciont_id)
+        .then(response => {
+            console.log(response)
+            alert("分發成功！")
+            this.setState({
+                dist: true
+            });
+        })
+        .catch(err => {
+            console.log(err)
+            alert(err)
+        }) 
+    }
+
+
     render(){
         if (this.state.redirect) {
             alert('請重新登入老師帳號！')
@@ -79,8 +98,15 @@ class AdminPage extends React.Component{
                                         <div className='my-3' key={i} style={{marginLeft:"30px"}}>
                                           <h4 className='mb-2'>第{i+1}時段：</h4>
                                             <SelectionData data={data} />
+                                            {
+                                                student.result[i] != undefined ? 
+                                                (<h4>您選到的課是：{student.result[i].course_name}</h4>) : 
+                                                (<div></div>)
+                                                
+                                            }
                                         </div>)
                                       })}
+
                                     <ul class="nav flex-column">
                                     <li class="">
                                         <p class="stuLi">School: {student.school}</p>
@@ -109,6 +135,7 @@ class AdminPage extends React.Component{
                 </div>
                 <div class="userInfoWrapper">
                     <h5 class="userInfo">歡迎回來，管理員</h5>
+                    <div onClick={this.handleDist} className='btn btn-primary'style={{padding:"15px 20px"}}>分發</div>
                 </div>
                 <div class="row main">
 
