@@ -1,5 +1,6 @@
 import React from 'react'
 import {Redirect} from 'react-router-dom'
+import SelectionData from '../component/SelectionData'
 
 const axios = require('axios');
 
@@ -27,19 +28,16 @@ class AdminPage extends React.Component{
         }
 
         if (this.state.token) {
-              axios.post('/api/teacher/profile', {
-                token: this.state.token
-              })
+              axios.get('/api/students')
               .then(response => {
                 console.log(response.data.section);
                 this.setState({
-                  course_name: response.data.course_name,
-                  students: response.data.students
+                  students: response.data
                 });
               })
               .catch(error => {
                 console.log(error);
-                alert('請重新登入！')
+                alert('something wrong！')
                 this.setState({redirect: true});
               });
         }
@@ -75,6 +73,14 @@ class AdminPage extends React.Component{
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12">
+                                    {
+                                        student.section.map((data, i) => {
+                                        return(
+                                        <div className='my-3' key={i} style={{marginLeft:"30px"}}>
+                                          <h4 className='mb-2'>第{i+1}時段：</h4>
+                                            <SelectionData data={data} />
+                                        </div>)
+                                      })}
                                     <ul class="nav flex-column">
                                     <li class="">
                                         <p class="stuLi">School: {student.school}</p>
@@ -102,7 +108,7 @@ class AdminPage extends React.Component{
                     <h1>學生資訊</h1>
                 </div>
                 <div class="userInfoWrapper">
-                    <h5 class="userInfo">歡迎回來，{this.state.course_name+"老師"}</h5>
+                    <h5 class="userInfo">歡迎回來，管理員</h5>
                 </div>
                 <div class="row main">
 
