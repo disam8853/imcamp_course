@@ -22,7 +22,7 @@ const option = {
   useNewUrlParser: true
 };
 
-const mongoURI = 'mongodb+srv://admin:admin@cluster0-hw6no.gcp.mongodb.net/test?retryWrites=true&w=majority';
+const mongoURI = 'mongodb+srv://admin:admin@cluster0-q3dwo.gcp.mongodb.net/test?retryWrites=true&w=majority';
 mongoose.connect(mongoURI, option).then(function() {
   //connected successfully
   console.log("connect db successfully!")
@@ -39,9 +39,7 @@ mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.use(express.static(path.join(__dirname, "./frontend/build")));
 
 app.use(logger('dev'));
 app.use(express.json());

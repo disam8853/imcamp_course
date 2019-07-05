@@ -148,7 +148,7 @@ class SelectCourse extends React.Component{
                         </div>
                       </div>
                     </div>
-                    <button className="btn btn-primary btn-lg btn-block category" type="button" data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapseExample">
+                    <button disabled className="btn btn-primary btn-lg btn-block category" type="button" data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapseExample">
                     7/4（四）09：00~10：30 小選修
                     </button>
                     <div className="collapse" id="collapse2">
@@ -163,7 +163,7 @@ class SelectCourse extends React.Component{
                       </div>
                     </div>
 
-                    <button className="btn btn-primary btn-lg btn-block category" type="button" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapseExample">
+                    <button disabled className="btn btn-primary btn-lg btn-block category" type="button" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapseExample">
                     7/4（四）10：30~12：00 小選修
                     </button>
                     <div className="collapse" id="collapse3">
