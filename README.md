@@ -13,13 +13,6 @@ cd backend
 npm install
 npm start
 ```
-## Testing:
-* 測試學生帳號1
--- E-mail: 1234
--- password: 1234
-* 測試學生帳號2
--- email: 5678
--- password: 5678
 
 ## Description
 
